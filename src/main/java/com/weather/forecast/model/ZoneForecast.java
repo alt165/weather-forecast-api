@@ -4,32 +4,32 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "weather_forecasts")
+@Table(name = "zone_forecasts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WeatherForecast {
+public class ZoneForecast {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "forecast_id", nullable = false)
+    private Forecast forecast;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "zone_id", nullable = false)
     private Zone zone;
 
     @Column(nullable = false)
-    private LocalDate forecastDate;
-
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ForecastPeriod period; // 1_DAY, 3_DAYS, 5_DAYS
+    private ForecastPeriod period; // ONE_DAY, THREE_DAYS, FIVE_DAYS
 
-    // Temperatura
+    // Temperatura (°C)
     @Column(nullable = false)
     private Double minTemperature;
 
@@ -51,15 +51,16 @@ public class WeatherForecast {
     @Column(nullable = false)
     private Integer cloudiness;
 
-    @Column(length = 1000)
-    private String observations;
+    // Observaciones particulares de esta zona
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String zoneObservations;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
-
 
     @PrePersist
     protected void onCreate() {

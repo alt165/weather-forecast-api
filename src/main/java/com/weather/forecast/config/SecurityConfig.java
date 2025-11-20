@@ -59,8 +59,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/zones/active").permitAll()
-                        .requestMatchers("/api/forecasts/public/**").permitAll()
-                        .requestMatchers("/api/forecasts/zone/**").permitAll()
+                        .requestMatchers("/api/forecasts/current").permitAll()
+                        .requestMatchers("/api/forecasts/date/**").permitAll()
+                        .requestMatchers("/api/forecasts/range").permitAll()
+                        .requestMatchers("/api/forecasts/{id}").permitAll()
                         .anyRequest().authenticated()
                 );
 

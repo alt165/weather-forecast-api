@@ -1,17 +1,15 @@
 package com.weather.forecast.dto;
 
-import com.weather.forecast.model.WeatherForecast.ForecastPeriod;
+import com.weather.forecast.model.ZoneForecast.ForecastPeriod;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WeatherForecastDTO {
+public class ZoneForecastDTO {
 
     private Long id;
 
@@ -19,9 +17,6 @@ public class WeatherForecastDTO {
     private Long zoneId;
 
     private String zoneName;
-
-    @NotNull(message = "La fecha del pronóstico es obligatoria")
-    private LocalDate forecastDate;
 
     @NotNull(message = "El período del pronóstico es obligatorio")
     private ForecastPeriod period;
@@ -53,10 +48,5 @@ public class WeatherForecastDTO {
     @Max(value = 100, message = "La nubosidad debe ser máximo 100%")
     private Integer cloudiness;
 
-    private String observations;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
+    private String zoneObservations; // Observaciones particulares de la zona
 }
